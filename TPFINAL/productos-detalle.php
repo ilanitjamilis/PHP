@@ -12,9 +12,9 @@
 		  <img class="card-img-top">
 		  <div class="card-block">
 			<h4 class="card-title"><?php echo $prod->nombre; ?></h4>
-			<p class="card-text">Categoria: <?php echo $prod->idCategoria; ?></p>
-			<p class="card-text">Desripción: <?php echo $prod->descripcion; ?></p>
 			<p class="card-text">Código: <?php echo $prod->codigo; ?></p>
+			<p class="card-text">Categoria: <?php echo $prod->idCategoria; ?></p>
+			<p class="card-text"><?php echo $prod->descripcion; ?></p>
 			<p class="card-text">Precio: $<?php echo $prod->precio; ?></p>
 			<!-- Falta imagen -->
 		  </div>
