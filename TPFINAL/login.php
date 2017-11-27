@@ -1,7 +1,8 @@
 <?php
+  session_start();
   include_once ($_SERVER["DOCUMENT_ROOT"] . '/TPFINAL/dao/usuarioDao.php');
   include_once ($_SERVER["DOCUMENT_ROOT"] . '/TPFINAL/model/usuario.php');
-  include ('header.html');
+  include_once ('header.html');
 ?>
 
 <script>
@@ -41,13 +42,14 @@
       type: "POST",
       url: "validarLogin.php",
       data:$("#formPrincipal").serialize(),
-      success: function (input) {
+      success: function (input) {        
           //Cuando hay errores aca en AJAX comentar todo lo de abajo y hacer un alert del imput (es la respuesta)
           //alert(input);
 
           var errores = JSON.parse(input);
+
           if(errores["TodoBien"] == "NO HAY ERRORES"){
-            window.location.href = "backend.php?usuarioUsuario="+usuario;
+            window.location = "backend.php?usuarioUsuario="+usuario;
           }
           else{
             var i = -1;

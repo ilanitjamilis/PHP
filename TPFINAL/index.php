@@ -1,7 +1,13 @@
 
 		<?php
+			include ('session.php');
 			include_once ($_SERVER["DOCUMENT_ROOT"] . '/TPFINAL/dao/productoDao.php');
 			include ('header.html');
+			/*
+				if(echo 'OK'){
+					ir a backend
+				}
+			*/
 		?>
 
 		<h2>Productos Destacados</h2>

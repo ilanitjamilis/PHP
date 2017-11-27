@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include_once ($_SERVER["DOCUMENT_ROOT"] . '/TPFINAL/model/usuario.php');
 include_once ($_SERVER["DOCUMENT_ROOT"] . '/TPFINAL/dao/usuarioDao.php');
 
@@ -49,8 +49,11 @@ if (isset($_POST['usuario'])) {
     $miUsuario = usuarioDao::traerUsuario($usu->usuario);
     if($miUsuario->contrasena==$usu->contrasena){
         $error["TodoBien"] = "NO HAY ERRORES";
+        $_SESSION['usuarioLogueado'] = 'OK';
+        $_SESSION['nombreUsuario'] = $usu->usuario;
     }
     else{
+      $_SESSION['usuarioLogueado'] = 'ERROR';
       $existeUsuario = usuarioDao::verificarExistenciaUsuario($usu->usuario);
       if($existeUsuario){
         $error["errorContrasena"] = "Contraseña incorrecta";

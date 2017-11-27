@@ -34,10 +34,14 @@ else{
 
 //Armar registracion.php
 //Armar login.php // 2 campos --> mail y clave + botón ingresar // aparece cuando van a login.php y las que requieren seguridad si no está logueado
-//Para no repetir todo hacer un include() que tenga el session_start y el if a ver si está instanciada o. Si no está instanciada hacer un header.location(login.php);
+
+//Para no repetir todo hacer un include() que tenga el session_start y el if a ver si está instanciada o no.
+//Si no está instanciada hacer un header.location(login.php);
 //Otro include para unnset($_SESSION['id']);
+
 //Hacer menu de backend --> productos/categorias/login
-//Un solo php con el menu y hacer include en todos. Pasar de pagina y "Hola Ilanit" + "Cerrar Sesión
+//Un solo php con el menu y hacer include en todos.
+//Pasar de pagina y "Hola Ilanit" + "Cerrar Sesión
 
 //Vamos a ver como generar un cookie
 //Un check en el formulario de login guardar o no mi usuario
