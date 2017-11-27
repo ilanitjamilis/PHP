@@ -81,14 +81,12 @@
 					data:$("#formPrincipal").serialize(),
 					success: function (input) {
 
-						alert(input);
-
 							//Cuando hay errores aca en AJAX comentar todo lo de abajo y hacer un alert del imput (es la respuesta)
 							//alert(input);
 
 							var errores = JSON.parse(input);
 							var labelError = $(".error");
-							if(error["TodoBien"]=="NO HAY ERRORES"){
+							if(errores["TodoBien"]=="NO HAY ERRORES"){
 								alert("Cambios guardados correctamente");
 								labelError.innerHTML="";
 								window.location = 'http://localhost/TPFINAL/login.php';
