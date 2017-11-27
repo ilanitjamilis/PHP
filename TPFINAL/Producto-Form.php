@@ -1,7 +1,7 @@
 		<?php
 			include_once ($_SERVER["DOCUMENT_ROOT"] . '/TPFINAL/dao/productoDao.php');
 			include_once ($_SERVER["DOCUMENT_ROOT"] . '/TPFINAL/dao/categoriaDao.php');
-			include ('header.html');
+			include ('headerbackend.html');
 
 			$id = (isset($_GET["idProducto"]) ? $_GET["idProducto"] : 0);
 

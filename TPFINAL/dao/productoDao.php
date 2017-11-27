@@ -8,7 +8,7 @@ class productoDao {
         $opts = array(
         'servername' => "localhost",
         'username' => "root",
-        'password' => "",
+        'password' => "root",
         'dbname' => "db",
     );
         $DBH = new PDO("mysql:host=" . $opts['servername'] . ";dbname=" . $opts['dbname'], $opts['username'], $opts['password']);
@@ -26,194 +26,194 @@ class productoDao {
             $STH = $DBH->prepare($query);
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             $STH->execute($params);
-            
+
 			$prod = new producto();
-			
+
 			if ($STH->rowCount() > 0) {
 
 				//RECORRO CADA FILA
 				while($row = $STH->fetch()) {
-					$prod->id = $row['idProductos'];    
-					$prod->idCategoria = $row['idCategorias'];  
-					$prod->codigo = $row['Codigo'];  
-					$prod->nombre = $row['Nombre'];  
-					$prod->precio = $row['Precio']; 
-					$prod->destacado = $row['Destacado'];  
-					$prod->descripcion = $row['Descripcion'];  
-					$prod->imagen = $row['Imagen'];  					
+					$prod->id = $row['idProductos'];
+					$prod->idCategoria = $row['idCategorias'];
+					$prod->codigo = $row['Codigo'];
+					$prod->nombre = $row['Nombre'];
+					$prod->precio = $row['Precio'];
+					$prod->destacado = $row['Destacado'];
+					$prod->descripcion = $row['Descripcion'];
+					$prod->imagen = $row['Imagen'];
 				}
-			}			
-			
+			}
+
         } catch (PDOException $e) {
             return new producto();
         }
         $DBH = null;
         return $prod;
     }
-	
+
 	public static function traerProductoCC($id) {
         $DBH = self::abrirBaseDatos();
         try {
-            $query = "SELECT productos.idProductos, categorias.Nombre AS Categoria, productos.Codigo, productos.Nombre, productos.Precio, productos.Destacado, 
-			productos.Descripcion, productos.Imagen FROM productos 
+            $query = "SELECT productos.idProductos, categorias.Nombre AS Categoria, productos.Codigo, productos.Nombre, productos.Precio, productos.Destacado,
+			productos.Descripcion, productos.Imagen FROM productos
 			INNER JOIN categorias ON productos.idCategorias = categorias.idCategorias WHERE idProductos= :idProductoP";
-			
+
 			$params = array(
                 ":idProductoP" => $id
             );
-			
+
             $STH = $DBH->prepare($query);
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             $STH->execute($params);
-            
+
 			$prod = new producto();
-			
+
 			if ($STH->rowCount() > 0) {
 
 				//RECORRO CADA FILA
 				while($row = $STH->fetch()) {
-					$prod->id = $row['idProductos'];    
-					$prod->idCategoria = $row['Categoria'];  
-					$prod->codigo = $row['Codigo'];  
-					$prod->nombre = $row['Nombre'];  
-					$prod->precio = $row['Precio']; 
-					$prod->destacado = $row['Destacado'];  
-					$prod->descripcion = $row['Descripcion'];  
-					$prod->imagen = $row['Imagen']; 				
+					$prod->id = $row['idProductos'];
+					$prod->idCategoria = $row['Categoria'];
+					$prod->codigo = $row['Codigo'];
+					$prod->nombre = $row['Nombre'];
+					$prod->precio = $row['Precio'];
+					$prod->destacado = $row['Destacado'];
+					$prod->descripcion = $row['Descripcion'];
+					$prod->imagen = $row['Imagen'];
 				}
-			}	
-			
+			}
+
         } catch (PDOException $e) {
             return new producto();
         }
         $DBH = null;
-		
+
 		return $prod;
     }
-	
+
 	public static function traerProductosCC() {
         $DBH = self::abrirBaseDatos();
         try {
-            $query = "SELECT productos.idProductos, categorias.Nombre AS Categoria, productos.Codigo, productos.Nombre, productos.Precio, productos.Destacado, 
-			productos.Descripcion, productos.Imagen FROM productos 
+            $query = "SELECT productos.idProductos, categorias.Nombre AS Categoria, productos.Codigo, productos.Nombre, productos.Precio, productos.Destacado,
+			productos.Descripcion, productos.Imagen FROM productos
 			INNER JOIN categorias ON productos.idCategorias = categorias.idCategorias";
-			
+
             $STH = $DBH->prepare($query);
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             $STH->execute();
-            
+
 			$listado = array();
-			
+
 			if ($STH->rowCount() > 0) {
 
 				//RECORRO CADA FILA
 				$i = 0;
 				while($row = $STH->fetch()) {
 					$prod = new producto();
-					
-					$prod->id = $row['idProductos'];    
-					$prod->idCategoria = $row['Categoria'];  
-					$prod->codigo = $row['Codigo'];  
-					$prod->nombre = $row['Nombre'];  
-					$prod->precio = $row['Precio']; 
-					$prod->destacado = $row['Destacado'];  
-					$prod->descripcion = $row['Descripcion'];  
-					$prod->imagen = $row['Imagen'];  			
+
+					$prod->id = $row['idProductos'];
+					$prod->idCategoria = $row['Categoria'];
+					$prod->codigo = $row['Codigo'];
+					$prod->nombre = $row['Nombre'];
+					$prod->precio = $row['Precio'];
+					$prod->destacado = $row['Destacado'];
+					$prod->descripcion = $row['Descripcion'];
+					$prod->imagen = $row['Imagen'];
 
 					$listado[$i] = $prod;
-					
+
 					$i++;
 				}
-			}		
-			
+			}
+
         } catch (PDOException $e) {
             echo $query . "<br>" . $e->getMessage();
         }
         $DBH = null;
         return $listado;
     }
-	
+
 	public static function traerProductosFiltrados($id) {
         $DBH = self::abrirBaseDatos();
         try {
-            $query = "SELECT productos.idProductos, categorias.Nombre AS Categoria, productos.Codigo, productos.Nombre, productos.Precio, productos.Destacado, 
-			productos.Descripcion, productos.Imagen FROM productos 
+            $query = "SELECT productos.idProductos, categorias.Nombre AS Categoria, productos.Codigo, productos.Nombre, productos.Precio, productos.Destacado,
+			productos.Descripcion, productos.Imagen FROM productos
 			INNER JOIN categorias ON productos.idCategorias = categorias.idCategorias WHERE categorias.idCategorias=:idCat";
-			
+
 			$params = array(
                 ":idCat" => $id
             );
-			
+
             $STH = $DBH->prepare($query);
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             $STH->execute($params);
-            
+
 			$listado = array();
-			
+
 			if ($STH->rowCount() > 0) {
 
 				//RECORRO CADA FILA
 				$i = 0;
 				while($row = $STH->fetch()) {
 					$prod = new producto();
-					
-					$prod->id = $row['idProductos'];    
-					$prod->idCategoria = $row['Categoria'];  
-					$prod->codigo = $row['Codigo'];  
-					$prod->nombre = $row['Nombre'];  
-					$prod->precio = $row['Precio']; 
-					$prod->destacado = $row['Destacado'];  
-					$prod->descripcion = $row['Descripcion'];  
-					$prod->imagen = $row['Imagen'];  			
+
+					$prod->id = $row['idProductos'];
+					$prod->idCategoria = $row['Categoria'];
+					$prod->codigo = $row['Codigo'];
+					$prod->nombre = $row['Nombre'];
+					$prod->precio = $row['Precio'];
+					$prod->destacado = $row['Destacado'];
+					$prod->descripcion = $row['Descripcion'];
+					$prod->imagen = $row['Imagen'];
 
 					$listado[$i] = $prod;
-					
+
 					$i++;
 				}
-			}		
-			
+			}
+
         } catch (PDOException $e) {
             echo $query . "<br>" . $e->getMessage();
         }
         $DBH = null;
         return $listado;
     }
-	
+
 	public static function traerProductosDestacados() {
         $DBH = self::abrirBaseDatos();
         try {
-            $query = "SELECT productos.idProductos, categorias.Nombre AS Categoria, productos.Codigo, productos.Nombre, productos.Precio, productos.Destacado, 
-			productos.Descripcion, productos.Imagen FROM productos 
+            $query = "SELECT productos.idProductos, categorias.Nombre AS Categoria, productos.Codigo, productos.Nombre, productos.Precio, productos.Destacado,
+			productos.Descripcion, productos.Imagen FROM productos
 			INNER JOIN categorias ON productos.idCategorias = categorias.idCategorias WHERE productos.Destacado= 2 ";
-			
+
             $STH = $DBH->prepare($query);
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             $STH->execute();
-            
+
 			$listado = array();
-			
+
 			if ($STH->rowCount() > 0) {
 
 				//RECORRO CADA FILA
 				$i = 0;
 				while($row = $STH->fetch()) {
 					$prod = new producto();
-					
-					$prod->id = $row['idProductos'];    
-					$prod->idCategoria = $row['Categoria'];  
-					$prod->codigo = $row['Codigo'];  
-					$prod->nombre = $row['Nombre'];  
-					$prod->precio = $row['Precio']; 
-					$prod->destacado = $row['Destacado'];  
-					$prod->descripcion = $row['Descripcion'];  
-					$prod->imagen = $row['Imagen'];  			
+
+					$prod->id = $row['idProductos'];
+					$prod->idCategoria = $row['Categoria'];
+					$prod->codigo = $row['Codigo'];
+					$prod->nombre = $row['Nombre'];
+					$prod->precio = $row['Precio'];
+					$prod->destacado = $row['Destacado'];
+					$prod->descripcion = $row['Descripcion'];
+					$prod->imagen = $row['Imagen'];
 
 					$listado[$i] = $prod;
-					
+
 					$i++;
 				}
-			}		
-			
+			}
+
         } catch (PDOException $e) {
             echo $query . "<br>" . $e->getMessage();
         }
@@ -224,37 +224,37 @@ class productoDao {
     public static function traerProductos() {
         $DBH = self::abrirBaseDatos();
         try {
-            $query = "SELECT productos.idProductos, categorias.Nombre AS Categoria, productos.Codigo, productos.Nombre, productos.Precio, productos.Destacado, 
-			productos.Descripcion, productos.Imagen FROM productos 
+            $query = "SELECT productos.idProductos, categorias.Nombre AS Categoria, productos.Codigo, productos.Nombre, productos.Precio, productos.Destacado,
+			productos.Descripcion, productos.Imagen FROM productos
 			INNER JOIN categorias ON productos.idCategorias = categorias.idCategorias";
             $STH = $DBH->prepare($query);
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             $STH->execute();
-			
+
 			$listado = array();
-			
+
 			if ($STH->rowCount() > 0) {
 
 				//RECORRO CADA FILA
 				$i = 0;
 				while($row = $STH->fetch()) {
 					$prod = new producto();
-					
-					$prod->id = $row['idProductos'];    
-					$prod->idCategoria = $row['Categoria'];  
-					$prod->codigo = $row['Codigo'];  
-					$prod->nombre = $row['Nombre'];  
-					$prod->precio = $row['Precio']; 
-					$prod->destacado = $row['Destacado'];  
-					$prod->descripcion = $row['Descripcion'];  
-					$prod->imagen = $row['Imagen'];  			
+
+					$prod->id = $row['idProductos'];
+					$prod->idCategoria = $row['Categoria'];
+					$prod->codigo = $row['Codigo'];
+					$prod->nombre = $row['Nombre'];
+					$prod->precio = $row['Precio'];
+					$prod->destacado = $row['Destacado'];
+					$prod->descripcion = $row['Descripcion'];
+					$prod->imagen = $row['Imagen'];
 
 					$listado[$i] = $prod;
-					
+
 					$i++;
 				}
-			}		
-			
+			}
+
         } catch (PDOException $e) {
             echo $query . "<br>" . $e->getMessage();
         }
@@ -265,8 +265,8 @@ class productoDao {
     public static function agregarModificarProducto($producto) {
         $DBH = self::abrirBaseDatos();
         try {
-            $query = "INSERT INTO productos SET idProductos = :idProductosP, idCategorias=:idCategoriasP, Codigo=:codigoP, Nombre=:nombreP, Precio=:precioP, 
-			Destacado=:destacadoP, Descripcion=:descripcionP, Imagen=:imagenP ON DUPLICATE KEY UPDATE idProductos = :idProductosP, idCategorias=:idCategoriasP, 
+            $query = "INSERT INTO productos SET idProductos = :idProductosP, idCategorias=:idCategoriasP, Codigo=:codigoP, Nombre=:nombreP, Precio=:precioP,
+			Destacado=:destacadoP, Descripcion=:descripcionP, Imagen=:imagenP ON DUPLICATE KEY UPDATE idProductos = :idProductosP, idCategorias=:idCategoriasP,
 			Codigo=:codigoP, Nombre=:nombreP, Precio=:precioP, Destacado=:destacadoP, Descripcion=:descripcionP, Imagen=:imagenP";
             $STH = $DBH->prepare($query);
             $STH->setFetchMode(PDO::FETCH_ASSOC);
@@ -303,38 +303,38 @@ class productoDao {
         }
         $DBH = null;
     }
-	
+
 	public static function validarCodigo($codValidar, $id){
 		$DBH = self::abrirBaseDatos();
-		
+
 		$existe = 0;
-	
+
 		try {
 			$query = "SELECT idProductos, Codigo FROM productos";
 			$STH = $DBH->prepare($query);
 			$STH->setFetchMode(PDO::FETCH_ASSOC);
 			$STH->execute();
-			
+
 			if ($STH->rowCount() > 0) {
 
 				//RECORRO CADA FILA
 				$i = 0;
 				while($row = $STH->fetch()) {
-					
+
 					if($id != $row['idProductos']){
 						if($codValidar == $row['Codigo']){
 							$existe = 1;
 						}
-					} 			
-					
+					}
+
 					$i++;
 				}
-			}	
+			}
 		} catch (PDOException $e) {
 			echo $query . "<br>" . $e->getMessage();
 		}
 		$DBH = null;
-		
+
 		return $existe;
 	}
 

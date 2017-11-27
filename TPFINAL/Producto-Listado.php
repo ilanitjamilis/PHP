@@ -1,6 +1,6 @@
 		<?php
 			include_once ($_SERVER["DOCUMENT_ROOT"] . '/TPFINAL/dao/productoDao.php');
-			include ('header.html');
+			include ('headerbackend.html');
 		?>
 
 		<script>
@@ -42,7 +42,7 @@
 				'modificarProducto(".$producto->id.");'>Modificar</button><button onclick='eliminarProducto(".$producto->id.");'>
 				Eliminar</button></td></tr>";
 
-				$salida .= '<div class="card" style="width: 20rem; float:left;">
+				$salida .= '<div class="card" style="width: 30rem; float:left; margin:10px; padding-bottom:20px;">
 							  <img class="card-img-top">
 							  <div class="card-block">
 								<p class="card-text">Categoria: '.$producto->idCategoria.'</p>

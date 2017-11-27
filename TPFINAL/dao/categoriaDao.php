@@ -8,7 +8,7 @@ class categoriaDao {
         $opts = array(
         'servername' => "localhost",
         'username' => "root",
-        'password' => "",
+        'password' => "root",
         'dbname' => "db",
     );
         $DBH = new PDO("mysql:host=" . $opts['servername'] . ";dbname=" . $opts['dbname'], $opts['username'], $opts['password']);
@@ -26,22 +26,22 @@ class categoriaDao {
             $STH = $DBH->prepare($query);
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             $STH->execute($params);
-            
-			$cat = new categoria();
-			
-			if ($STH->rowCount() > 0) {
 
-				//RECORRO CADA FILA
-				while($row = $STH->fetch()) {
-					$cat->id = $row['idCategorias'];   
-					$cat->nombre = $row['Nombre'];    
-				}
-			}							
+      			$cat = new categoria();
+
+      			if ($STH->rowCount() > 0) {
+
+      				//RECORRO CADA FILA
+      				while($row = $STH->fetch()) {
+      					$cat->id = $row['idCategorias'];
+      					$cat->nombre = $row['Nombre'];
+      				}
+      			}
         } catch (PDOException $e) {
             return new categoria();
         }
         $DBH = null;
-		return $cat;
+    	  return $cat;
     }
 
     public static function traerCategorias() {
@@ -51,25 +51,25 @@ class categoriaDao {
             $STH = $DBH->prepare($query);
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             $STH->execute();
-            
+
 			$listado = array();
-			
+
 			if ($STH->rowCount() > 0) {
 
 				//RECORRO CADA FILA
 				$i = 0;
 				while($row = $STH->fetch()) {
 					$cat = new categoria();
-					
-					$cat->id = $row['idCategorias'];   
-					$cat->nombre = $row['Nombre'];    
+
+					$cat->id = $row['idCategorias'];
+					$cat->nombre = $row['Nombre'];
 
 					$listado[$i] = $cat;
-					
+
 					$i++;
 				}
-			}							
-			
+			}
+
         } catch (PDOException $e) {
             echo $query . "<br>" . $e->getMessage();
         }
@@ -80,7 +80,7 @@ class categoriaDao {
     public static function agregarModificarCategoria($categoria) {
         $DBH = self::abrirBaseDatos();
         try {
-            $query = "INSERT INTO categorias SET idCategorias = :idCategoriasP, Nombre=:nombreP ON DUPLICATE KEY UPDATE 
+            $query = "INSERT INTO categorias SET idCategorias = :idCategoriasP, Nombre=:nombreP ON DUPLICATE KEY UPDATE
 			idCategorias = :idCategoriasP, Nombre=:nombreP";
             $STH = $DBH->prepare($query);
             $STH->setFetchMode(PDO::FETCH_ASSOC);

@@ -38,7 +38,7 @@ if (isset($_POST['nombre'])) {
 	$errorDestacado = validarDatoObligatorio($prod->destacado, "destacado");
 	$errorDescripcion = validarDatoObligatorio($prod->descripcion, "descripcion");
 	$errorImagen = validarDatoObligatorio($prod->imagen, "imagen");
-	
+
 	if($prod->idCategoria<1){
 		$error["errorCategoria"] = "Seleccione categoría";
 		$hayError = true;
@@ -46,8 +46,8 @@ if (isset($_POST['nombre'])) {
 	else{
 		$error["errorCategoria"] = "";
 	}
-	
-	
+
+
 	if ($errorCodigo != "") {
 		$error["errorCodigo"] = $errorCodigo;
 		$hayError = true;
@@ -62,7 +62,7 @@ if (isset($_POST['nombre'])) {
 			$error["errorCodigo"] = "";
 		}
 	}
-	
+
     if ($errorNombre != "") {
 		$error["errorNombre"] = $errorNombre;
 		$hayError = true;
@@ -70,7 +70,7 @@ if (isset($_POST['nombre'])) {
 	else{
 		$error["errorNombre"] = "";
 	}
-	
+
 	if ($errorPrecio != "") {
 		$error["errorPrecio"] = $errorPrecio;
 		$hayError = true;
@@ -78,7 +78,7 @@ if (isset($_POST['nombre'])) {
 	else{
 		$error["errorPrecio"] = "";
 	}
-	
+
 	if($prod->destacado<1){
 		$error["errorDestacado"] = "Seleccione destacado";
 		$hayError = true;
@@ -86,8 +86,8 @@ if (isset($_POST['nombre'])) {
 	else{
 		$error["errorDestacado"] = "";
 	}
-	
-	
+
+
 	if ($errorDescripcion != "") {
 		$error["errorDescripcion"] = $errorDescripcion;
 		$hayError = true;
@@ -95,19 +95,19 @@ if (isset($_POST['nombre'])) {
 	else{
 		$error["errorDescripcion"] = "";
 	}
-	
+
 	/*if ($errorImagen != "") {
 		$error["errorImagen"] = $errorImagen;
 		$hayError = true;
     }*/
 	$error["errorImagen"] = "";
-	
+
 	if($hayError == false){
 		$error["TodoBien"] = "NO HAY ERRORES";
 		if($prod->id == ""){
-            $prod->id = NULL;
-        }
-        productoDao::agregarModificarProducto($prod);
+        $prod->id = NULL;
+    }
+    productoDao::agregarModificarProducto($prod);
 	}
 }
 
